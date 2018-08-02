@@ -8,4 +8,4 @@ Open index.html in your browser and click start.
 
 ### Prerequisites
 
-A browser that supports [Promises] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility).
+A browser that supports [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility).
