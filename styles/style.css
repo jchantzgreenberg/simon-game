@@ -1,0 +1,26 @@
+.pressed {
+  filter: brightness(1.75);
+}
+
+.green {
+  background-color: Green;
+}
+
+.yellow {
+  background-color: #bbbb00;
+}
+
+.red {
+  background-color: #880000;
+
+}
+
+.blue {
+  background-color: #000080;
+}
+
+#buttongrid {
+  display: inline-grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 50% 50%;
+}
