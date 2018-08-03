@@ -99,27 +99,19 @@ var computerInput = {
 
   sequenceLength: 0,
 
-  inputStep: function(key){ 
-    // function keyUp(key){
-    //   playerInput.pressButton(key, playerInput.keyUp.bind(playerInput))
-    // }
-    playerInput.pressButton(key, playerInput.keyDown.bind(playerInput)) 
-    // setTimeout(keyUp, 200, key)
-  },
-
   inputSequence: function(resolve){
     let i = 0
     let sequence = playerInput.sequence
-    computerInput.sequenceLength = sequence.length
-    setTimeout( function pressAll() {
-      computerInput.inputStep(playerInput.playerControls[sequence[i]])
-      if (i<=computerInput.sequenceLength){
+    function pressAll() {
+      playerInput.pressButton(playerInput.playerControls[sequence[i]])
+      if (i<=sequence.length){
         i++
         setTimeout(pressAll, 1000, i)
       } else {
         resolve()
       }
-    }, 0)
+    }
+    pressAll()
   },
 
   nextSequence: function(){
@@ -134,8 +126,11 @@ var computerInput = {
   },
 
   startGame: function(){
-    playerInput.sequence = []
-    computerInput.nextSequence()
+    if (!this.gameStarted){
+      this.gameStarted = true
+      playerInput.sequence = []
+      computerInput.nextSequence()
+    }
   }
 
 }
