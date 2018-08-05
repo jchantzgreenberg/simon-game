@@ -12,13 +12,6 @@ let playerInput = {
     startButton.addEventListener('click', () => {this.startGame()})
   },
 
-  // enableDifficultySelect: function(){
-  //   let difficultyInput = document.querySelector('#difficulty')
-  //   difficultyInput.oninput = function() {
-  //     this.difficultyLevel = difficultyInput.value - 1
-  //   }
-  // },
-
   playerControls: ['w', 'e', 's', 'd'],
 
   sequence: [],
@@ -29,7 +22,7 @@ let playerInput = {
 
   difficultyLevel: 0,
 
-  finalSequenceLength: [8, 14, 20, 31],
+  finalSequenceLength: [1, 2, 3, 4],
 
   playersTurn: false,
 
@@ -62,12 +55,17 @@ let playerInput = {
 
   beatLevel: function(sequenceLength){
     let turnText = document.getElementById('turn')
+    let difficultyLevel = this.difficultyLevel
+    let finalSequenceLength = this.finalSequenceLength[difficultyLevel]
     this.playersTurn = false 
-    if (sequenceLength < this.finalSequenceLength[this.difficultyLevel]){
-      setTimeout(() => {this.nextSequence()}, 1000)
-    } else {
+    // if (sequenceLength < finalSequenceLength){
+    //   setTimeout(() => {this.nextSequence()}, 1000)
+    // } else 
+    if ( (difficultyLevel < 4) && (sequenceLength >= finalSequenceLength) ){
       turnText.innerText = 'YOU WIN'
       this.gameStarted = false
+    } else {
+      setTimeout(() => {this.nextSequence()}, 1000)
     }
   },
 
