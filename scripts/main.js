@@ -1,14 +1,15 @@
 'use strict'
-var allowPlayerInput = function(){
-  document.addEventListener('keydown', playerInput.keyDownButton.bind(playerInput))
-}
 
 var enableStartButton = function(){
   let startButton = document.getElementById('start')
-  startButton.addEventListener('click', playerInput.startGame.bind(playerInput))
+  startButton.addEventListener('click', () => {playerInput.startGame()})
 }
 
 var playerInput = {
+
+  allowPlayerInput: function(){
+    document.addEventListener('keydown', (event) => {this.keyDownButton(event)})
+  },
 
   playerControls: ['w', 'e', 's', 'd'],
 
@@ -18,7 +19,13 @@ var playerInput = {
 
   lossTimeout: 0,
 
+  difficultyLevel: 0,
+
+  finalSequenceLength: [8, 14, 20, 31],
+
   playersTurn: false,
+
+  repeatPress: false,
 
   toggleTurn: function(){},
 
@@ -27,6 +34,7 @@ var playerInput = {
     turnText.innerText = 'YOU LOSE'
     this.playersTurn = false
     soundPlayer.playLose()
+    this.gameStarted = false
   },
 
   playerTurnStart: function() {
@@ -34,19 +42,25 @@ var playerInput = {
     turnText.innerText = 'PLAYER GO'
     this.position = 0
     this.playersTurn = true
-    setTimeout(this.slowLose.bind(this), 1000)
+    setTimeout(() => {this.slowLose()}, 1000)
   },
 
   slowLose: function(){
     clearTimeout(this.lossTimeout)
     if (this.playersTurn) {
-      this.lossTimeout = setTimeout(this.youLose,5000)
+      this.lossTimeout = setTimeout(() => {this.youLose()},5000)
     }
   },
 
-  beatLevel: function(){
-    this.playersTurn = false  
-    setTimeout(this.nextSequence.bind(this), 1000)
+  beatLevel: function(sequenceLength){
+    let turnText = document.getElementById('turn')
+    this.playersTurn = false 
+    if (sequenceLength < this.finalSequenceLength[this.difficultyLevel]){
+      setTimeout(() => {this.nextSequence()}, 1000)
+    } else {
+      turnText.innerText = 'YOU WIN'
+      this.gameStarted = false
+    }
   },
 
   wrongKeyLose: function(key, position){
@@ -55,7 +69,7 @@ var playerInput = {
       this.youLose()
     } else if (position == this.sequence.length-1) {
       clearTimeout(this.lossTimeout)
-      this.beatLevel(key)
+      this.beatLevel(this.sequence.length)
     }
   },
 
@@ -72,42 +86,40 @@ var playerInput = {
 
   keyDownButton: function(event){
     let key = event.key
-    if (!this.playersTurn){
-      return
+    if (this.playerControls.includes(key) && this.playersTurn){
+      this.pressButton(key)
     }
-    this.pressButton(key)
   },
 
   pressButton: function(key){
     let simonButton
-    switch(key){
-    case 'w':
-    case 'e':
-    case 's':
-    case 'd':
-      simonButton = document.querySelector('[data-key='+key+']')
-      this.keyDown(simonButton, key)
-    }
+    simonButton = document.querySelector('[data-key='+key+']')
+    this.keyDown(simonButton, key)
   },
 
-  getSimonButton(key){
+  getSimonButton: function(key){
     return document.querySelector('[data-key='+key+']')
+  },
+
+  modifiedSpeed: function(speed, sequenceLength){
+    let speedModifier = 1
+    if ( (sequenceLength > 5) && (sequenceLength < 15) ) {
+      speedModifier = .8 ** (Math.floor((sequenceLength - 2) / 4))
+    } else if (sequenceLength >= 15) {
+      speedModifier = .8 ** 3
+    }
+    return speed * speedModifier
   },
  
   inputSequence: function(resolve){
     let i = 0
     let sequence = this.sequence
-    let speedModifier = 1
-    let speed;
-    if (sequence.length > 5){
-      speedModifier = 1 * (Math.pow(1.25, Math.floor((sequence.length - 2) / 4)))
-      speed = 625 / speedModifier
-    }
+    let speed = this.modifiedSpeed(625, sequence.length)
     let pressAll = () => {
-      this.pressButton(this.playerControls[sequence[i]])
-      if (i<=sequence.length){
-        i++
+      if (i < sequence.length){
+        this.pressButton(this.playerControls[sequence[i]])
         setTimeout(pressAll, speed, i)
+        i++
       } else {
         resolve()
       }
@@ -117,13 +129,13 @@ var playerInput = {
 
   nextSequence: function(){
     let nextMove = Math.floor(Math.random() * 4)
-    this.sequence.push(nextMove)
     let turnText = document.getElementById('turn')
+    let inputSequence
     turnText.innerText = 'LISTEN CAREFULLY'
+    this.sequence.push(nextMove)
     this.playersTurn = false   
-    let inputSequence= new Promise(this.inputSequence.bind(this))
-    inputSequence.then(this.playerTurnStart.bind(this))
-
+    inputSequence = new Promise((resolve) => {this.inputSequence(resolve)})
+    inputSequence.then(() => {this.playerTurnStart()})
   },
 
   startGame: function(){
@@ -134,46 +146,6 @@ var playerInput = {
     }
   }
 }
-
-// var computerInput = {
-
-//   sequenceLength: 0,
-
-//   inputSequence: function(resolve){
-//     let i = 0
-//     let sequence = playerInput.sequence
-//     function pressAll() {
-//       playerInput.pressButton(playerInput.playerControls[sequence[i]])
-//       if (i<=sequence.length){
-//         i++
-//         setTimeout(pressAll, 1000, i)
-//       } else {
-//         resolve()
-//       }
-//     }
-//     pressAll()
-//   },
-
-//   nextSequence: function(){
-//     let nextMove = Math.floor(Math.random() * 4)
-//     playerInput.sequence.push(nextMove)
-//     let turnText = document.getElementById('turn')
-//     turnText.innerText = 'LISTEN CAREFULLY'
-//     playerInput.playersTurn = false   
-//     let inputSequence= new Promise(computerInput.inputSequence)
-//     inputSequence.then(playerInput.playerTurnStart.bind(playerInput))
-
-//   },
-
-//   startGame: function(){
-//     if (!this.gameStarted){
-//       this.gameStarted = true
-//       playerInput.sequence = []
-//       computerInput.nextSequence()
-//     }
-//   }
-
-// }
 
 var soundPlayer = {
   sounds: {
@@ -195,6 +167,6 @@ var soundPlayer = {
 
 }
 
-allowPlayerInput()
+playerInput.allowPlayerInput()
 enableStartButton()
 
