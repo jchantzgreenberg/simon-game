@@ -1,15 +1,23 @@
 'use strict'
 
-var enableStartButton = function(){
-  let startButton = document.getElementById('start')
-  startButton.addEventListener('click', () => {playerInput.startGame()})
-}
 
-var playerInput = {
+let playerInput = {
 
   allowPlayerInput: function(){
     document.addEventListener('keydown', (event) => {this.keyDownButton(event)})
   },
+
+  enableStartButton: function(){
+    let startButton = document.getElementById('start')
+    startButton.addEventListener('click', () => {this.startGame()})
+  },
+
+  // enableDifficultySelect: function(){
+  //   let difficultyInput = document.querySelector('#difficulty')
+  //   difficultyInput.oninput = function() {
+  //     this.difficultyLevel = difficultyInput.value - 1
+  //   }
+  // },
 
   playerControls: ['w', 'e', 's', 'd'],
 
@@ -139,15 +147,17 @@ var playerInput = {
   },
 
   startGame: function(){
+    let difficultySelect = document.getElementById('difficulty')
     if (!this.gameStarted){
       this.gameStarted = true
       this.sequence = []
+      this.difficultyLevel = difficultySelect.options[difficultySelect.selectedIndex].value
       this.nextSequence()
     }
   }
 }
 
-var soundPlayer = {
+let soundPlayer = {
   sounds: {
     'w': new Audio('sounds/a.wav'), 
     'e': new Audio('sounds/s.wav'), 
@@ -168,5 +178,6 @@ var soundPlayer = {
 }
 
 playerInput.allowPlayerInput()
-enableStartButton()
+playerInput.enableStartButton()
+//playerInput.enableDifficultySelect()
 
