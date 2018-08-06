@@ -26,16 +26,13 @@ let playerInput = {
 
   playersTurn: false,
 
-  repeatPress: false,
-
-  toggleTurn: function(){},
-
   youLose: function(){
     let turnText = document.getElementById('turn')
     turnText.innerText = 'YOU LOSE'
     this.playersTurn = false
     soundPlayer.playLose()
     this.gameStarted = false
+    this.enableDifficultySelect()
   },
 
   playerTurnStart: function() {
@@ -55,16 +52,12 @@ let playerInput = {
 
   beatLevel: function(sequenceLength){
     let turnText = document.getElementById('turn')
-    let difficultySelect = document.getElementById('difficulty')
     let difficultyLevel = this.difficultyLevel
     let finalSequenceLength = this.finalSequenceLength[difficultyLevel]
     this.playersTurn = false 
-    // if (sequenceLength < finalSequenceLength){
-    //   setTimeout(() => {this.nextSequence()}, 1000)
-    // } else 
     if ( (difficultyLevel < 4) && (sequenceLength >= finalSequenceLength) ){
       turnText.innerText = 'YOU WIN'
-      difficultySelect.disabled = false
+      this.enableDifficultySelect()
       this.gameStarted = false
     } else {
       setTimeout(() => {this.nextSequence()}, 1000)
@@ -100,21 +93,20 @@ let playerInput = {
   },
 
   pressButton: function(key){
-    let simonButton
-    simonButton = document.querySelector('[data-key='+key+']')
+    let simonButton = this.getSimonButton(key)
     this.keyDown(simonButton, key)
   },
 
   getSimonButton: function(key){
-    return document.querySelector('[data-key='+key+']')
+    return document.querySelector(`[data-key=${key}]`)
   },
 
-  modifiedSpeed: function(speed, sequenceLength){
+  modifiedSpeed: function(speed, sequenceLength, multiplier){
     let speedModifier = 1
     if ( (sequenceLength > 5) && (sequenceLength < 15) ) {
-      speedModifier = .8 ** (Math.floor((sequenceLength - 2) / 4))
+      speedModifier = multiplier ** (Math.floor((sequenceLength - 2) / 4))
     } else if (sequenceLength >= 15) {
-      speedModifier = .8 ** 3
+      speedModifier = multiplier ** 3
     }
     return speed * speedModifier
   },
@@ -122,7 +114,7 @@ let playerInput = {
   inputSequence: function(resolve){
     let i = 0
     let sequence = this.sequence
-    let speed = this.modifiedSpeed(625, sequence.length)
+    let speed = this.modifiedSpeed(625, sequence.length, .8)
     let pressAll = () => {
       if (i < sequence.length){
         this.pressButton(this.playerControls[sequence[i]])
@@ -147,14 +139,23 @@ let playerInput = {
   },
 
   startGame: function(){
-    let difficultySelect = document.getElementById('difficulty')
     if (!this.gameStarted){
       this.gameStarted = true
       this.sequence = []
-      this.difficultyLevel = difficultySelect.options[difficultySelect.selectedIndex].value
-      difficultySelect.disabled = true
+      this.setDifficulty()
       this.nextSequence()
     }
+  },
+
+  setDifficulty: function(){
+    let difficultySelect = document.getElementById('difficulty')
+    this.difficultyLevel = difficultySelect.options[difficultySelect.selectedIndex].value
+    difficultySelect.disabled = true
+  },
+
+  enableDifficultySelect: function(){
+    let difficultySelect = document.getElementById('difficulty')
+    difficultySelect.disabled = false
   }
 }
 
@@ -180,5 +181,4 @@ let soundPlayer = {
 
 playerInput.allowPlayerInput()
 playerInput.enableStartButton()
-//playerInput.enableDifficultySelect()
 
