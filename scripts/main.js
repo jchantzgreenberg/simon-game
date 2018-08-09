@@ -24,6 +24,8 @@ let playerInput = {
 
   playersTurn: false,
 
+  keyBeingPressed: "",
+
   playerTurnStart: function() {
     let turnText = document.getElementById('turn')
     turnText.innerText = 'PLAYER GO'
@@ -42,14 +44,11 @@ let playerInput = {
   youLose: function(){
     let turnText = document.getElementById('turn')
     turnText.innerText = 'YOU LOSE'
-    soundPlayer.playLose()
+    soundPlayer.playSound('lose')
     this.playersTurn = false
     this.gameEnd()
   },
 
-  
-
- 
   beatLevel: function(sequenceLength){
     let turnText = document.getElementById('turn')
     let difficultyLevel = this.difficultyLevel
@@ -75,8 +74,10 @@ let playerInput = {
 
   buttonDown: function(key){
     let simonButton = this.getSimonButton(key)
-    simonButton.classList.add('pressed')
-    soundPlayer.playSound(key)
+    if (!simonButton.classList.contains('pressed')){
+      simonButton.classList.add('pressed')
+      soundPlayer.playSound(key)
+    }
   },
 
   buttonUp: function(key){
@@ -92,14 +93,16 @@ let playerInput = {
 
   keyDown: function(event){
     let key = event.key
-    if (this.playerControls.includes(key) && this.playersTurn){
+    if (this.playerControls.includes(key) && this.playersTurn && !this.keyBeingPressed){
+      this.keyBeingPressed = key
       this.buttonDown(key)
     }
   },
 
   keyUp: function(event){
     let key = event.key
-    if (this.playerControls.includes(key) && this.playersTurn){
+    if (this.playerControls.includes(key) && this.playersTurn && key===this.keyBeingPressed){
+      this.keyBeingPressed = ''
       this.buttonUp(key)
     }
   },
@@ -197,11 +200,6 @@ let soundPlayer = {
   pauseSound: function(soundName){
     this.sounds[soundName].pause()
   },
-
-  playLose: function(){
-    soundPlayer.playSound('lose')
-  },
-
 }
 
 playerInput.allowPlayerInput()
