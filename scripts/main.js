@@ -1,8 +1,11 @@
 let playerInput = {
 
   allowPlayerInput: function(){
+    //grid = document.getElementById('buttongrid')
     document.addEventListener('keydown', (event) => {this.keyDown(event)})
+    document.addEventListener('mousedown', (event) => {this.keyDown(event)})
     document.addEventListener('keyup', (event) => {this.keyUp(event)})
+    document.addEventListener('mouseup', (event) => {this.keyUp(event)})
   },
 
   enableStartButton: function(){
@@ -86,7 +89,15 @@ let playerInput = {
   },
 
   keyDown: function(event){
-    let key = event.key
+    // if (!event.target.classList.contains('simonButton')){
+    //   return
+    // }
+    // let target = event.target
+    // let key = event.key || target.getAttribute('data-key')
+    let key = this.hasValidTarget(event)
+    if (!key){
+      return
+    }
     if (this.playerControls.includes(key) && this.playersTurn && !this.keyBeingPressed){
       this.keyBeingPressed = key
       this.buttonDown(key)
@@ -94,15 +105,35 @@ let playerInput = {
   },
 
   keyUp: function(event){
-    let key = event.key
+    // if (!event.target.classList.contains('simonButton')){
+    //   return
+    // }
+    // let target = event.target
+    // let key = event.key || target.getAttribute('data-key')
+    let key = this.hasValidTarget(event)
+    if (!key){
+      return
+    }
     if (this.playerControls.includes(key) && this.playersTurn && key===this.keyBeingPressed){
       this.keyBeingPressed = ''
       this.buttonUp(key)
     }
   },
 
+  hasValidTarget: function(event){
+    let target = event.target
+    if (event.key) {
+      return event.key
+    } else if (target.classList.contains('simon-button')) {
+      return target.getAttribute('data-key')
+    } else {
+      return
+    }
+  },
+
   getSimonButton: function(key){
-    return document.querySelector(`[data-key=${key}]`)
+    let button = document.querySelector(`.simon-button[data-key=${key}]`)
+    return button
   },
 
   inputTime: function(sequenceLength){

@@ -2,37 +2,48 @@
   filter: brightness(1.75);
 }
 
-.simonButton {
-  padding: 100px;
-  margin: 0px 2px 0px 2px;
-  background-repeat: no-repeat;
+.simon-button {
+  padding: 4vw;
+  border: 10px solid #555;
+  /*background-repeat: no-repeat;*/
 }
 
 .green {
-  /*background-color: Green;*/
-  background-image: url('../svg/button-green.svg');
+  background-color: Green;
+  border-top-left-radius: 100%
+ /* background-image: url('../svg/button-green.svg');*/
 }
 
 .red {
-  /*background-color: #880000;*/
-  background-image: url('../svg/button-red.svg');
+  background-color: #880000;
+  border-top-right-radius: 100%
+ /* background-image: url('../svg/button-red.svg');*/
 }
 
 .yellow {
-  /*background-color: #bbbb00;*/
-  background-image: url('../svg/button-yellow.svg');
+  background-color: #bbbb00;
+  border-bottom-left-radius: 100%
+  /*background-image: url('../svg/button-yellow.svg');*/
 }
 
 
 .blue {
-  /*background-color: #000080;*/
-  background-image: url('../svg/button-blue.svg');
-}
+  background-color: #000080;
+  border-bottom-right-radius: 100%;
+  /*background-image: url('../svg/button-blue.svg');*/
+} 
 
 
 #buttongrid {
+  display: flex;
   background-color: #555555;
-  padding: 20px;
+  position: relative;
+/*  margin: auto;
+  text-align: center;*/
+  top: 0vh;
+  left: 25vw;
+  width: 50vw;
+  height: 50vw;
   border-radius: 100%;
   display: inline-grid;
   grid-template-rows: 50% 50%;

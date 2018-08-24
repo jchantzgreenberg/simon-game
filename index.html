@@ -7,15 +7,12 @@
 </head>
 <body>
   <div id='buttongrid'>
-    <div class='green simonButton' data-key='w'>W</div>
-    <div class='red simonButton' data-key='e'>E</div>
-    <div class='yellow simonButton' data-key='s'>S</div>
-    <div class='blue simonButton' data-key='d'>D</div>
+    <div class='green simon-button' data-key='w'></div>
+    <div class='red simon-button' data-key='e'></div>
+    <div class='yellow simon-button' data-key='s'></div>
+    <div class='blue simon-button' data-key='d'></div>
   </div>
   <div id='controls'>
-    <button id='start'>START</button>
-  </div>
-  <div id='status'>
     <span>Difficulty:</span>
     <select id='difficulty'>
       <option value="0" selected="selected">1</option>
@@ -24,7 +21,8 @@
       <option value="3">4</option>
       <option value="4">Endless</option>
     </select>
-  </div>   
+    <button id='start'>START</button>
+  </div> 
   <script src='scripts/main.js'></script>
 </body>
 
