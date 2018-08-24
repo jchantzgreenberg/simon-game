@@ -24,11 +24,9 @@ let playerInput = {
 
   playersTurn: false,
 
-  keyBeingPressed: "",
+  keyBeingPressed: '',
 
   playerTurnStart: function() {
-    let turnText = document.getElementById('turn')
-    turnText.innerText = 'PLAYER GO'
     this.position = 0
     this.playersTurn = true
     setTimeout(() => {this.slowLose()}, 1000)
@@ -42,20 +40,16 @@ let playerInput = {
   },
 
   youLose: function(){
-    let turnText = document.getElementById('turn')
-    turnText.innerText = 'YOU LOSE'
     soundPlayer.playSound('lose')
     this.playersTurn = false
     this.gameEnd()
   },
 
   beatLevel: function(sequenceLength){
-    let turnText = document.getElementById('turn')
     let difficultyLevel = this.difficultyLevel
     let finalSequenceLength = this.finalSequenceLength[difficultyLevel]
     this.playersTurn = false 
     if ( (difficultyLevel < 4) && (sequenceLength >= finalSequenceLength) ){
-      turnText.innerText = 'YOU WIN'
       this.gameEnd()
     } else {
       setTimeout(() => {this.nextSequence()}, 1000)
@@ -144,11 +138,9 @@ let playerInput = {
 
   nextSequence: function(){
     let nextMove = Math.floor(Math.random() * 4)
-    let turnText = document.getElementById('turn')
     let inputSequence
     this.sequence.push(nextMove)
     this.playersTurn = false
-    turnText.innerText = 'LISTEN CAREFULLY'   
     inputSequence = new Promise((resolve) => {this.inputSequence(resolve)})
     inputSequence.then(() => {this.playerTurnStart()})
   },
@@ -169,7 +161,7 @@ let playerInput = {
     startButton.disabled = false
     this.gameStarted = false
     this.enableDifficultySelect()
-  },  
+  },
 
   setDifficulty: function(){
     let difficultySelect = document.getElementById('difficulty')
