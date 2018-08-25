@@ -2,46 +2,64 @@
   filter: brightness(1.75);
 }
 
+.controls {
+  background: #000;
+  border-radius: 100%;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  position: absolute;
+  color: White;
+}
+
+p {
+  margin: 1vh 0 0 0;
+}
+
+.everything {
+  text-align: center;
+}
+
 .simon-button {
-  padding: 4vw;
-  border: 10px solid #555;
+  width: auto;
+  margin: 1vw;
+  /*border: 10px solid #555;*/
   /*background-repeat: no-repeat;*/
 }
 
 .green {
   background-color: Green;
-  border-top-left-radius: 100%
+  border-radius: 100% 0% 0% 0%;
  /* background-image: url('../svg/button-green.svg');*/
 }
 
 .red {
   background-color: #880000;
-  border-top-right-radius: 100%
+  border-radius: 0% 100% 0% 0%;
  /* background-image: url('../svg/button-red.svg');*/
 }
 
 .yellow {
   background-color: #bbbb00;
-  border-bottom-left-radius: 100%
+  border-radius: 0% 0% 0% 100%;
   /*background-image: url('../svg/button-yellow.svg');*/
 }
 
 
 .blue {
   background-color: #000080;
-  border-bottom-right-radius: 100%;
+  border-radius: 0% 0% 100% 0%;
   /*background-image: url('../svg/button-blue.svg');*/
 } 
 
 
-#buttongrid {
-  display: flex;
-  background-color: #555555;
+.buttongrid {
+  text-align: center;
+  background-color: #000;
   position: relative;
-/*  margin: auto;
-  text-align: center;*/
-  top: 0vh;
-  left: 25vw;
+  padding: 1vw;
+  box-shadow: 0px 0px 20px #111;
   width: 50vw;
   height: 50vw;
   border-radius: 100%;
