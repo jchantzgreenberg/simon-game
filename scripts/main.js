@@ -1,7 +1,6 @@
 let playerInput = {
 
   allowPlayerInput: function(){
-    //grid = document.getElementById('buttongrid')
     document.addEventListener('keydown', (event) => {this.keyDown(event)})
     document.addEventListener('mousedown', (event) => {this.keyDown(event)})
     document.addEventListener('keyup', (event) => {this.keyUp(event)})
@@ -89,11 +88,6 @@ let playerInput = {
   },
 
   keyDown: function(event){
-    // if (!event.target.classList.contains('simonButton')){
-    //   return
-    // }
-    // let target = event.target
-    // let key = event.key || target.getAttribute('data-key')
     let key = this.hasValidTarget(event)
     if (!key){
       return
@@ -105,11 +99,6 @@ let playerInput = {
   },
 
   keyUp: function(event){
-    // if (!event.target.classList.contains('simonButton')){
-    //   return
-    // }
-    // let target = event.target
-    // let key = event.key || target.getAttribute('data-key')
     let key = this.hasValidTarget(event)
     if (!key){
       return

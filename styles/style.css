@@ -1,61 +1,10 @@
-.pressed {
-  filter: brightness(1.75);
-}
 
-.controls {
-  background: #000;
-  border-radius: 100%;
-  width: 50%;
-  height: 50%;
-  top: 25%;
-  left: 25%;
-  position: absolute;
-  color: White;
-}
-
-p {
-  margin: 1vh 0 0 0;
-}
-
-.everything {
+#game {
   text-align: center;
 }
 
-.simon-button {
-  width: auto;
-  margin: 1vw;
-  /*border: 10px solid #555;*/
-  /*background-repeat: no-repeat;*/
-}
 
-.green {
-  background-color: Green;
-  border-radius: 100% 0% 0% 0%;
- /* background-image: url('../svg/button-green.svg');*/
-}
-
-.red {
-  background-color: #880000;
-  border-radius: 0% 100% 0% 0%;
- /* background-image: url('../svg/button-red.svg');*/
-}
-
-.yellow {
-  background-color: #bbbb00;
-  border-radius: 0% 0% 0% 100%;
-  /*background-image: url('../svg/button-yellow.svg');*/
-}
-
-
-.blue {
-  background-color: #000080;
-  border-radius: 0% 0% 100% 0%;
-  /*background-image: url('../svg/button-blue.svg');*/
-} 
-
-
-.buttongrid {
-  text-align: center;
+#button-grid {
   background-color: #000;
   position: relative;
   padding: 1vw;
@@ -67,3 +16,59 @@ p {
   grid-template-rows: 50% 50%;
   grid-template-columns: 50% 50%;
 }
+
+#center-panel {
+  background: #FFF;
+  box-sizing: border-box;
+  border-radius: 100%;
+  border-style: solid;
+  border-width: 1vw;
+  border-color: Black;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  position: absolute;
+}
+
+#controls {
+  position: absolute;
+  width: 50%;
+  top: 25%;
+  left: 25%;
+}
+
+p {
+  margin: 1vh 0 0 0;
+}
+
+.simon-button {
+  width: auto;
+  margin: 1vw;
+}
+
+.green {
+  background-color: Green;
+  border-radius: 100% 0% 0% 0%;
+}
+
+.red {
+  background-color: #880000;
+  border-radius: 0% 100% 0% 0%;
+}
+
+.yellow {
+  background-color: #bbbb00;
+  border-radius: 0% 0% 0% 100%;
+}
+
+.blue {
+  background-color: #000080;
+  border-radius: 0% 0% 100% 0%;
+} 
+
+.pressed {
+  filter: brightness(1.75);
+}
+
+

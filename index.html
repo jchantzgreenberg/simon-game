@@ -6,24 +6,25 @@
   <link rel='stylesheet' href='styles/style.css' type='text/css' />
 </head>
 <body>
-  <div class='everything'>
-    <div class='buttongrid'>
+  <div id='game'>
+    <div id='button-grid'>
       <div class='green simon-button' data-key='w'></div>
       <div class='red simon-button' data-key='e'></div>
       <div class='yellow simon-button' data-key='s'></div>
       <div class='blue simon-button' data-key='d'></div>
-    <div class='controls'>
-      <p>Difficulty</p>
-      <select id='difficulty'>
-        <option value="0" selected="selected">1</option>
-        <option value="1">2</option>
-        <option value="2">3</option>
-        <option value="3">4</option>
-        <option value="4">Endless</option>
-      </select>
-      <br/>
-      <button id='start'>START</button>
-    </div> 
+      <div id='center-panel'>
+        <div id = 'controls'>
+          <p>Difficulty</p>
+          <select id='difficulty'>
+            <option value="0" selected="selected">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">Endless</option>
+          </select>
+          <button id='start'>START</button>
+        </div>
+      </div> 
     </div>
   </div>
   <script src='scripts/main.js'></script>
